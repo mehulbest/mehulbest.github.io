@@ -509,10 +509,73 @@
     50%       { box-shadow: 0 0 0 5px rgba(0,255,200,0); }
   }
 
+  /* ─── HAMBURGER BUTTON ─── */
+  .nav-toggle {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+    width: 36px;
+    height: 36px;
+    background: transparent;
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    cursor: pointer;
+    padding: 6px;
+    flex-shrink: 0;
+    z-index: 110;
+  }
+  .nav-toggle span {
+    display: block;
+    width: 18px;
+    height: 1.5px;
+    background: var(--cyan);
+    border-radius: 2px;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+    transform-origin: center;
+  }
+  .nav-toggle[aria-expanded="true"] span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+  .nav-toggle[aria-expanded="true"] span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+  .nav-toggle[aria-expanded="true"] span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+
   /* ─── RESPONSIVE ─── */
   @media (max-width: 700px) {
-    nav { padding: 1rem 1.2rem; }
-    .nav-links { gap: 1rem; }
+    nav {
+      padding: 0.9rem 1.2rem;
+      flex-wrap: nowrap;
+      position: relative;
+    }
+
+    .nav-toggle { display: flex; }
+
+    .nav-links {
+      display: none;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      flex-direction: column;
+      gap: 0;
+      background: rgba(6, 8, 16, 0.97);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+      padding: 0.5rem 0;
+      list-style: none;
+    }
+    .nav-links.open { display: flex; }
+
+    .nav-links li { width: 100%; }
+    .nav-links a {
+      display: block;
+      padding: 0.85rem 1.5rem;
+      font-size: 0.78rem;
+      letter-spacing: 0.12em;
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-links li:last-child a { border-bottom: none; }
+    .nav-links a::after { display: none; }
+
     h1.hero-name { font-size: clamp(2.8rem, 12vw, 5rem); }
     .hero-stats { gap: 2rem; }
     .timeline::before { display: none; }
@@ -520,7 +583,11 @@
     .timeline-dot { display: none; }
   }
 
-  /* ─── CURSOR GLOW ─── */
+  /* ─── CURSOR GLOW (desktop/mouse only) ─── */
+  @media (hover: none) and (pointer: coarse) {
+    .cursor-glow, .cursor-dot, .cursor-ring { display: none !important; }
+  }
+
   .cursor-glow {
     pointer-events: none;
     position: fixed;
@@ -642,12 +709,15 @@
 <!-- NAV -->
 <nav>
   <a class="nav-logo" href="#">MU<span style="color:var(--muted)">://</span>portfolio</a>
-  <ul class="nav-links">
-    <li><a href="#experience">Experience</a></li>
-    <li><a href="#projects">Projects</a></li>
-    <li><a href="#skills">Skills</a></li>
-    <li><a href="#education">Education</a></li>
-    <li><a href="#contact">Contact</a></li>
+  <button class="nav-toggle" id="nav-toggle" aria-label="Toggle menu" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
+  <ul class="nav-links" id="nav-links">
+    <li><a href="#experience" class="nav-link-item">Experience</a></li>
+    <li><a href="#projects" class="nav-link-item">Projects</a></li>
+    <li><a href="#skills" class="nav-link-item">Skills</a></li>
+    <li><a href="#education" class="nav-link-item">Education</a></li>
+    <li><a href="#contact" class="nav-link-item">Contact</a></li>
   </ul>
 </nav>
 
@@ -707,7 +777,7 @@
           <div class="exp-role">GenAI Engineer</div>
           <div class="exp-company">Novus Connect · Noida, India</div>
         </div>
-        <div class="exp-date">May 2025 – Present</div>
+        <div class="exp-date">Mar 2025 – Present</div>
       </div>
       <ul class="exp-bullets">
         <li>Architected a multi-project WebSocket call dispatcher routing live telephony traffic across 6+ AI voice bots (recruitment, healthcare, IVR, restaurant), reducing zero-code project onboarding time by 80% via YAML-driven configuration and per-call session isolation.</li>
@@ -1113,8 +1183,11 @@
   setTimeout(type, 800);
 })();
 
-/* ─── CURSOR GLOW ─── */
+/* ─── CURSOR GLOW (mouse devices only) ─── */
 (function(){
+  // Skip entirely on touch devices
+  if ('ontouchstart' in window || navigator.maxTouchPoints > 0) return;
+
   const glow = document.getElementById('cursor-glow');
   const dot  = document.getElementById('cursor-dot');
   const ring = document.getElementById('cursor-ring');
@@ -1166,7 +1239,35 @@
   document.addEventListener('mouseenter', () => { dot.style.opacity='1'; ring.style.opacity='1'; });
 })();
 
-/* ─── SCROLL REVEAL ─── */
+/* ─── HAMBURGER MENU ─── */
+(function(){
+  const toggle = document.getElementById('nav-toggle');
+  const links  = document.getElementById('nav-links');
+  if (!toggle || !links) return;
+
+  toggle.addEventListener('click', () => {
+    const isOpen = links.classList.toggle('open');
+    toggle.setAttribute('aria-expanded', isOpen);
+  });
+
+  // Close menu when a nav link is tapped
+  links.querySelectorAll('a').forEach(a => {
+    a.addEventListener('click', () => {
+      links.classList.remove('open');
+      toggle.setAttribute('aria-expanded', 'false');
+    });
+  });
+
+  // Close menu when tapping outside
+  document.addEventListener('click', e => {
+    if (!toggle.contains(e.target) && !links.contains(e.target)) {
+      links.classList.remove('open');
+      toggle.setAttribute('aria-expanded', 'false');
+    }
+  });
+})();
+
+
 (function(){
   const items = document.querySelectorAll('.timeline-item, .proj-card, .edu-card, .skill-tag');
   const obs = new IntersectionObserver((entries)=>{
