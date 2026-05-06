@@ -1,0 +1,1187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Mehul Uniyal — GenAI Engineer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;1,9..40,300&display=swap" rel="stylesheet" />
+<style>
+  /* ─── TOKENS ─── */
+  :root {
+    --bg:       #060810;
+    --bg2:      #0c0f1a;
+    --bg3:      #111628;
+    --border:   rgba(0,255,200,0.12);
+    --cyan:     #00ffc8;
+    --cyan-dim: rgba(0,255,200,0.18);
+    --amber:    #ffb340;
+    --text:     #c8d8e8;
+    --muted:    #5a7080;
+    --white:    #eaf2ff;
+    --font-mono: 'Space Mono', monospace;
+    --font-head: 'Syne', sans-serif;
+    --font-body: 'DM Sans', sans-serif;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font-body);
+    font-size: 16px;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  ::selection { background: var(--cyan); color: #000; }
+
+  /* ─── SCROLLBAR ─── */
+  ::-webkit-scrollbar { width: 4px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: var(--cyan-dim); border-radius: 2px; }
+
+  /* ─── CANVAS BG ─── */
+  #canvas {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    z-index: 0; pointer-events: none; opacity: 0.55;
+  }
+
+  /* ─── NAV ─── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1.2rem 3rem;
+    background: rgba(6,8,16,0.75);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .nav-logo {
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    color: var(--cyan);
+    letter-spacing: 0.08em;
+    text-decoration: none;
+  }
+
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--muted);
+    text-decoration: none;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    transition: color 0.2s;
+    position: relative;
+  }
+  .nav-links a::after {
+    content: ''; position: absolute; bottom: -3px; left: 0;
+    width: 0; height: 1px; background: var(--cyan);
+    transition: width 0.3s;
+  }
+  .nav-links a:hover { color: var(--cyan); }
+  .nav-links a:hover::after { width: 100%; }
+
+  /* ─── SECTIONS ─── */
+  section {
+    position: relative; z-index: 1;
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 6rem 2rem;
+  }
+
+  .section-label {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    color: var(--cyan);
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    margin-bottom: 0.6rem;
+    opacity: 0;
+    animation: fadeUp 0.6s ease forwards;
+  }
+
+  h2.section-title {
+    font-family: var(--font-head);
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    font-weight: 800;
+    color: var(--white);
+    line-height: 1.05;
+    margin-bottom: 3rem;
+    opacity: 0;
+    animation: fadeUp 0.6s 0.1s ease forwards;
+  }
+
+  /* ─── HERO ─── */
+  #hero {
+    min-height: 100vh;
+    display: flex; flex-direction: column; justify-content: center;
+    padding-top: 7rem;
+    max-width: 1100px;
+    margin: 0 auto;
+    padding-left: 2rem; padding-right: 2rem;
+  }
+
+  .hero-tag {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    font-family: var(--font-mono); font-size: 0.7rem;
+    color: var(--cyan); letter-spacing: 0.2em;
+    text-transform: uppercase;
+    border: 1px solid var(--border);
+    padding: 0.3rem 0.8rem;
+    border-radius: 2px;
+    margin-bottom: 1.5rem;
+    width: fit-content;
+    opacity: 0; animation: fadeUp 0.5s 0.1s ease forwards;
+  }
+
+  .hero-tag .dot {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: var(--cyan);
+    animation: pulse 1.5s infinite;
+  }
+
+  h1.hero-name {
+    font-family: var(--font-head);
+    font-size: clamp(3.5rem, 10vw, 7.5rem);
+    font-weight: 800;
+    color: var(--white);
+    line-height: 0.95;
+    letter-spacing: -0.02em;
+    margin-bottom: 0.4rem;
+    opacity: 0; animation: fadeUp 0.6s 0.2s ease forwards;
+  }
+
+  h1.hero-name span { color: var(--cyan); }
+
+  .hero-role {
+    font-family: var(--font-mono);
+    font-size: clamp(0.9rem, 2.5vw, 1.1rem);
+    color: var(--muted);
+    margin-bottom: 1.8rem;
+    opacity: 0; animation: fadeUp 0.6s 0.3s ease forwards;
+  }
+
+  .typing-cursor {
+    display: inline-block;
+    width: 2px; height: 1.1em;
+    background: var(--cyan);
+    margin-left: 3px;
+    vertical-align: middle;
+    animation: blink 0.9s step-end infinite;
+  }
+
+  .hero-desc {
+    max-width: 620px;
+    font-size: 1.05rem;
+    color: var(--text);
+    line-height: 1.8;
+    margin-bottom: 2.5rem;
+    opacity: 0; animation: fadeUp 0.6s 0.4s ease forwards;
+  }
+
+  .hero-cta {
+    display: flex; gap: 1rem; flex-wrap: wrap;
+    opacity: 0; animation: fadeUp 0.6s 0.5s ease forwards;
+  }
+
+  .btn {
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    text-decoration: none;
+    padding: 0.75rem 1.8rem;
+    border-radius: 2px;
+    transition: all 0.25s;
+    cursor: pointer;
+    display: inline-block;
+  }
+
+  .btn-primary {
+    background: var(--cyan);
+    color: #000;
+    border: 1px solid var(--cyan);
+    font-weight: 700;
+  }
+  .btn-primary:hover { background: transparent; color: var(--cyan); }
+
+  .btn-outline {
+    background: transparent;
+    color: var(--text);
+    border: 1px solid var(--border);
+  }
+  .btn-outline:hover { border-color: var(--cyan); color: var(--cyan); }
+
+  .hero-stats {
+    display: flex; gap: 3rem; margin-top: 4rem;
+    border-top: 1px solid var(--border);
+    padding-top: 2rem;
+    opacity: 0; animation: fadeUp 0.6s 0.6s ease forwards;
+    flex-wrap: wrap;
+  }
+
+  .stat-num {
+    font-family: var(--font-head);
+    font-size: 2.2rem; font-weight: 800;
+    color: var(--white);
+    line-height: 1;
+  }
+  .stat-num span { color: var(--cyan); }
+  .stat-label {
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    color: var(--muted);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-top: 0.2rem;
+  }
+
+  /* ─── EXPERIENCE ─── */
+  .timeline { position: relative; }
+  .timeline::before {
+    content: '';
+    position: absolute; left: 0; top: 0; bottom: 0;
+    width: 1px;
+    background: linear-gradient(to bottom, var(--cyan), transparent);
+    margin-left: 1px;
+  }
+
+  .timeline-item {
+    padding-left: 2.5rem;
+    padding-bottom: 3.5rem;
+    position: relative;
+    opacity: 0;
+    transform: translateX(-20px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  .timeline-item.visible { opacity: 1; transform: translateX(0); }
+
+  .timeline-dot {
+    position: absolute; left: -5px; top: 0.35rem;
+    width: 12px; height: 12px;
+    border-radius: 50%;
+    background: var(--bg);
+    border: 2px solid var(--cyan);
+    box-shadow: 0 0 10px var(--cyan);
+  }
+
+  .exp-header {
+    display: flex; flex-wrap: wrap; align-items: flex-start;
+    justify-content: space-between; gap: 0.5rem;
+    margin-bottom: 1rem;
+  }
+
+  .exp-role {
+    font-family: var(--font-head);
+    font-size: 1.25rem; font-weight: 700;
+    color: var(--white);
+  }
+
+  .exp-company {
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    color: var(--cyan);
+    letter-spacing: 0.08em;
+  }
+
+  .exp-date {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    color: var(--muted);
+    letter-spacing: 0.1em;
+    white-space: nowrap;
+  }
+
+  .exp-bullets { list-style: none; display: flex; flex-direction: column; gap: 0.6rem; }
+  .exp-bullets li {
+    font-size: 0.95rem;
+    color: var(--text);
+    padding-left: 1.2rem;
+    position: relative;
+  }
+  .exp-bullets li::before {
+    content: '▸';
+    position: absolute; left: 0;
+    color: var(--cyan); font-size: 0.7rem;
+    top: 0.2rem;
+  }
+
+  /* ─── PROJECTS ─── */
+  .projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .proj-card {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 1.8rem;
+    transition: border-color 0.3s, transform 0.3s, box-shadow 0.3s;
+    cursor: default;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.5s ease, transform 0.5s ease, border-color 0.3s, box-shadow 0.3s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .proj-card::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--cyan), transparent);
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+
+  .proj-card.visible { opacity: 1; transform: translateY(0); }
+  .proj-card:hover { border-color: rgba(0,255,200,0.4); box-shadow: 0 0 30px rgba(0,255,200,0.07); transform: translateY(-3px); }
+  .proj-card:hover::before { opacity: 1; }
+
+  .proj-num {
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    color: var(--muted);
+    letter-spacing: 0.2em;
+    margin-bottom: 0.8rem;
+  }
+
+  .proj-title {
+    font-family: var(--font-head);
+    font-size: 1.1rem; font-weight: 700;
+    color: var(--white);
+    margin-bottom: 0.9rem;
+    line-height: 1.3;
+  }
+
+  .proj-desc {
+    font-size: 0.88rem;
+    color: var(--text);
+    line-height: 1.7;
+    margin-bottom: 1.2rem;
+  }
+
+  .proj-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+  .proj-tag {
+    font-family: var(--font-mono);
+    font-size: 0.62rem;
+    color: var(--cyan);
+    border: 1px solid var(--cyan-dim);
+    padding: 0.18rem 0.55rem;
+    border-radius: 2px;
+    letter-spacing: 0.08em;
+  }
+
+  /* ─── SKILLS ─── */
+  .skills-wrapper { display: grid; gap: 2.5rem; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); }
+
+  .skill-group-title {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    color: var(--amber);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+    display: flex; align-items: center; gap: 0.5rem;
+  }
+  .skill-group-title::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+
+  .skill-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+  .skill-tag {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    padding: 0.3rem 0.7rem;
+    border-radius: 2px;
+    color: var(--text);
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    transition: all 0.2s;
+    opacity: 0;
+    transform: scale(0.9);
+    transition: opacity 0.3s ease, transform 0.3s ease, border-color 0.2s, color 0.2s;
+  }
+  .skill-tag.visible { opacity: 1; transform: scale(1); }
+  .skill-tag:hover { border-color: var(--cyan); color: var(--cyan); }
+
+  /* ─── EDUCATION ─── */
+  .edu-grid { display: grid; gap: 1.2rem; }
+  .edu-card {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 1.5rem 1.8rem;
+    display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-start;
+    gap: 0.5rem;
+    opacity: 0; transform: translateY(16px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+  }
+  .edu-card.visible { opacity: 1; transform: translateY(0); }
+
+  .edu-degree {
+    font-family: var(--font-head);
+    font-size: 1rem; font-weight: 700;
+    color: var(--white);
+  }
+  .edu-school {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--cyan);
+    margin-top: 0.2rem;
+  }
+  .edu-year {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    color: var(--muted);
+  }
+
+  /* ─── CONTACT ─── */
+  #contact {
+    text-align: center;
+  }
+
+  .contact-box {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 3.5rem 2rem;
+    max-width: 640px;
+    margin: 0 auto;
+    position: relative;
+    overflow: hidden;
+  }
+  .contact-box::before {
+    content: '';
+    position: absolute; bottom: 0; left: 50%; transform: translateX(-50%);
+    width: 200px; height: 1px;
+    background: linear-gradient(90deg, transparent, var(--cyan), transparent);
+  }
+
+  .contact-links {
+    display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;
+    margin-top: 2rem;
+  }
+
+  .contact-link {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--text);
+    text-decoration: none;
+    border: 1px solid var(--border);
+    padding: 0.55rem 1.2rem;
+    border-radius: 2px;
+    letter-spacing: 0.08em;
+    transition: all 0.2s;
+    display: flex; align-items: center; gap: 0.5rem;
+  }
+  .contact-link:hover { border-color: var(--cyan); color: var(--cyan); }
+
+  /* ─── FOOTER ─── */
+  footer {
+    position: relative; z-index: 1;
+    text-align: center;
+    padding: 1.5rem;
+    border-top: 1px solid var(--border);
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    color: var(--muted);
+  }
+
+  /* ─── ANIMATIONS ─── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes blink {
+    0%, 100% { opacity: 1; }
+    50%       { opacity: 0; }
+  }
+  @keyframes pulse {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(0,255,200,0.4); }
+    50%       { box-shadow: 0 0 0 5px rgba(0,255,200,0); }
+  }
+
+  /* ─── RESPONSIVE ─── */
+  @media (max-width: 700px) {
+    nav { padding: 1rem 1.2rem; }
+    .nav-links { gap: 1rem; }
+    h1.hero-name { font-size: clamp(2.8rem, 12vw, 5rem); }
+    .hero-stats { gap: 2rem; }
+    .timeline::before { display: none; }
+    .timeline-item { padding-left: 0; }
+    .timeline-dot { display: none; }
+  }
+
+  /* ─── CURSOR GLOW ─── */
+  .cursor-glow {
+    pointer-events: none;
+    position: fixed;
+    z-index: 9999;
+    top: 0; left: 0;
+    width: 100vw; height: 100vh;
+    background: radial-gradient(
+      600px circle at var(--cx, -999px) var(--cy, -999px),
+      rgba(0, 255, 200, 0.055) 0%,
+      rgba(0, 200, 160, 0.025) 30%,
+      transparent 70%
+    );
+    transition: background 0.08s ease;
+  }
+
+  .cursor-dot {
+    pointer-events: none;
+    position: fixed;
+    z-index: 10000;
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--cyan);
+    box-shadow: 0 0 12px 4px rgba(0,255,200,0.6), 0 0 30px 8px rgba(0,255,200,0.2);
+    transform: translate(-50%, -50%);
+    transition: transform 0.1s ease, opacity 0.3s;
+    mix-blend-mode: screen;
+  }
+
+  .cursor-ring {
+    pointer-events: none;
+    position: fixed;
+    z-index: 9999;
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    border: 1px solid rgba(0,255,200,0.45);
+    box-shadow: 0 0 10px rgba(0,255,200,0.15);
+    transform: translate(-50%, -50%);
+    transition: width 0.25s ease, height 0.25s ease, border-color 0.25s, transform 0.08s ease;
+  }
+
+  /* enlarge ring on hoverable elements */
+  a:hover ~ .cursor-ring,
+  button:hover ~ .cursor-ring { width: 56px; height: 56px; border-color: var(--cyan); }
+
+  /* ─── GLITCH ─── */
+  .glitch {
+    position: relative;
+  }
+  .glitch::before, .glitch::after {
+    content: attr(data-text);
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    font-family: inherit; font-size: inherit;
+    font-weight: inherit; color: inherit;
+    clip: rect(0,0,0,0);
+  }
+  .glitch:hover::before {
+    clip: rect(0, 9999px, 0, 0);
+    animation: glitch-top 0.3s steps(2) 1;
+    color: var(--cyan); left: 2px;
+  }
+  .glitch:hover::after {
+    clip: rect(0, 9999px, 0, 0);
+    animation: glitch-bot 0.3s steps(2) 1;
+    color: var(--amber); left: -2px;
+  }
+
+  @keyframes glitch-top {
+    0%   { clip: rect(42px, 9999px, 44px, 0); }
+    25%  { clip: rect(12px, 9999px, 59px, 0); }
+    50%  { clip: rect(48px, 9999px, 29px, 0); }
+    75%  { clip: rect(1px,  9999px, 90px, 0); }
+    100% { clip: rect(0,    9999px, 0,    0); }
+  }
+  @keyframes glitch-bot {
+    0%   { clip: rect(65px, 9999px, 119px, 0); }
+    25%  { clip: rect(79px, 9999px, 19px,  0); }
+    50%  { clip: rect(10px, 9999px, 82px,  0); }
+    75%  { clip: rect(97px, 9999px, 5px,   0); }
+    100% { clip: rect(0,    9999px, 0,     0); }
+  }
+
+  /* waveform decorative */
+  .waveform {
+    display: flex; align-items: center; gap: 3px;
+    height: 24px; margin-bottom: 1rem;
+  }
+  .waveform span {
+    width: 3px; border-radius: 3px;
+    background: var(--cyan);
+    animation: wave 1.2s ease-in-out infinite;
+  }
+  .waveform span:nth-child(1) { height: 8px;  animation-delay: 0s;    }
+  .waveform span:nth-child(2) { height: 18px; animation-delay: 0.1s;  }
+  .waveform span:nth-child(3) { height: 12px; animation-delay: 0.2s;  }
+  .waveform span:nth-child(4) { height: 22px; animation-delay: 0.3s;  }
+  .waveform span:nth-child(5) { height: 16px; animation-delay: 0.4s;  }
+  .waveform span:nth-child(6) { height: 8px;  animation-delay: 0.5s;  }
+  .waveform span:nth-child(7) { height: 14px; animation-delay: 0.6s;  }
+  .waveform span:nth-child(8) { height: 20px; animation-delay: 0.7s;  }
+  @keyframes wave {
+    0%, 100% { transform: scaleY(1); }
+    50%       { transform: scaleY(0.3); }
+  }
+
+</style>
+</head>
+<body>
+
+<!-- Cursor glow layers -->
+<div class="cursor-glow" id="cursor-glow"></div>
+<div class="cursor-ring"  id="cursor-ring"></div>
+<div class="cursor-dot"   id="cursor-dot"></div>
+
+<!-- Particle canvas -->
+<canvas id="canvas"></canvas>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-logo" href="#">MU<span style="color:var(--muted)">://</span>portfolio</a>
+  <ul class="nav-links">
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#education">Education</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-tag">
+    <span class="dot"></span>
+    Available for opportunities
+  </div>
+  <h1 class="hero-name glitch" data-text="Mehul">Mehul</h1>
+  <h1 class="hero-name glitch" style="color:var(--cyan); animation-delay:0.25s;" data-text="Uniyal.">Uniyal.</h1>
+  <p class="hero-role">
+    <span id="typed-text"></span><span class="typing-cursor"></span>
+  </p>
+  <p class="hero-desc">
+    GenAI Engineer specialising in production-grade voice AI, real-time telephony backends, and retrieval-augmented generation systems. Sole backend architect of a multi-tenant voice platform routing live calls across 6+ AI bots.
+  </p>
+  <div class="hero-cta">
+    <a class="btn btn-primary" href="#contact">Get in touch</a>
+    <a class="btn btn-outline" href="#projects">View work</a>
+    <a class="btn btn-outline" href="Mehul_Uniyal_2026_Resume.pdf" download="Mehul_Uniyal_Resume.pdf" style="display:inline-flex;align-items:center;gap:0.5rem;">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+      Resume PDF
+    </a>
+  </div>
+  <div class="hero-stats">
+    <div>
+      <div class="stat-num">6<span>+</span></div>
+      <div class="stat-label">AI Voice Bots</div>
+    </div>
+    <div>
+      <div class="stat-num">&lt;200<span>ms</span></div>
+      <div class="stat-label">TTS Latency</div>
+    </div>
+    <div>
+      <div class="stat-num">5<span>+</span></div>
+      <div class="stat-label">TTS Engines</div>
+    </div>
+    <div>
+      <div class="stat-num">80<span>%</span></div>
+      <div class="stat-label">Onboarding Time Reduced</div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <div class="section-label">Work Experience</div>
+  <h2 class="section-title">Where I've Built</h2>
+
+  <div class="timeline">
+    <!-- Novus Connect -->
+    <div class="timeline-item">
+      <div class="timeline-dot"></div>
+      <div class="exp-header">
+        <div>
+          <div class="exp-role">GenAI Engineer</div>
+          <div class="exp-company">Novus Connect · Noida, India</div>
+        </div>
+        <div class="exp-date">Mar 2025 – Present</div>
+      </div>
+      <ul class="exp-bullets">
+        <li>Architected a multi-project WebSocket call dispatcher routing live telephony traffic across 6+ AI voice bots (recruitment, healthcare, IVR, restaurant), reducing zero-code project onboarding time by 80% via YAML-driven configuration and per-call session isolation.</li>
+        <li>Built a pluggable adapter factory supporting 5 TTS engines (Google Neural2, Sarvam Bulbul v3, Azure, ElevenLabs) and 3 STT engines (Google Streaming, Deepgram, WebRTC VAD), enabling full provider switching through a single config change and cutting integration time by ~70%.</li>
+        <li>Achieved sub-200ms TTS latency by implementing parallel sentence synthesis (asyncio.create_task), thread-pool offloading, persistent HTTP keep-alive, and 40ms PCM chunking over a custom reverse-media WebSocket.</li>
+        <li>Constructed a SlotsManager with locked-slot architecture, dual-path extraction (regex + Groq LLM), streaming STT callbacks, and dual-mode barge-in via RMS thresholding and partial transcript matching.</li>
+        <li>Deployed a production RAG stack with smart chunking, BGE embeddings, FAISS + BM25 hybrid retrieval (RRF), cross-encoder reranking; semantic query triggering under 1ms via cosine similarity.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="section-label">Selected Projects</div>
+  <h2 class="section-title">Things I've Shipped</h2>
+
+  <div class="projects-grid">
+
+    <div class="proj-card">
+      <div class="proj-num">01 / SOLO PROJECT</div>
+      <div class="waveform">
+        <span></span><span></span><span></span><span></span>
+        <span></span><span></span><span></span><span></span>
+      </div>
+      <div class="proj-title">ClinicVoice — AI Voice Receptionist</div>
+      <div class="proj-desc">
+        End-to-end real-time voice appointment agent handling booking, rescheduling, cancellation and FAQ. Achieved sub-600ms voice round-trip (STT 150ms · LLM first token 180ms · TTS first audio 160ms).
+        Browser-to-speaker WebSocket pipeline with Redis-backed session state and an automated clinic onboarding pipeline.
+      </div>
+      <div class="proj-tags">
+        <span class="proj-tag">FastAPI</span>
+        <span class="proj-tag">ElevenLabs</span>
+        <span class="proj-tag">Groq LLaMA-3.3-70b</span>
+        <span class="proj-tag">Redis</span>
+        <span class="proj-tag">PostgreSQL</span>
+        <span class="proj-tag">Vue 3</span>
+        <span class="proj-tag">SQLAlchemy</span>
+      </div>
+    </div>
+
+    <div class="proj-card">
+      <div class="proj-num">02 / ANALYTICS</div>
+      <div class="proj-title">AI-Powered Call QA & Intent Analytics</div>
+      <div class="proj-desc">
+        Post-call QA scoring across 5 quality dimensions using Groq LLM with chunk-based transcript processing, processing 100+ call transcripts per batch. Acoustic stress intelligence system extracting F0, jitter, shimmer, HNR and energy variance with a 0-100 distress scoring scale.
+      </div>
+      <div class="proj-tags">
+        <span class="proj-tag">Groq LLM</span>
+        <span class="proj-tag">Parselmouth</span>
+        <span class="proj-tag">Pyannote</span>
+        <span class="proj-tag">spaCy NER</span>
+        <span class="proj-tag">SQL Server</span>
+        <span class="proj-tag">4 Indian Languages</span>
+      </div>
+    </div>
+
+    <div class="proj-card">
+      <div class="proj-num">03 / ML</div>
+      <div class="proj-title">Speech Emotion Recognition System</div>
+      <div class="proj-desc">
+        CNN-based multi-class emotion classifier on labeled audio datasets using librosa-extracted MFCC, chroma, and spectral contrast features on windowed segments. Reliable classification across 6 emotion categories.
+      </div>
+      <div class="proj-tags">
+        <span class="proj-tag">CNN</span>
+        <span class="proj-tag">Librosa</span>
+        <span class="proj-tag">MFCC</span>
+        <span class="proj-tag">Python</span>
+        <span class="proj-tag">Deep Learning</span>
+      </div>
+    </div>
+
+    <div class="proj-card">
+      <div class="proj-num">04 / PLATFORM</div>
+      <div class="proj-title">Production Telephony AI Voice Platform</div>
+      <div class="proj-desc">
+        WebSocket-based IVR system processing continuous 8kHz LINEAR16 PCM audio with FlowRunner/ScriptRunner dispatcher for dialogue state, slot filling, and call lifecycle. Shipped as a production wheel with session persistence and graceful termination.
+      </div>
+      <div class="proj-tags">
+        <span class="proj-tag">WebSocket</span>
+        <span class="proj-tag">Google STT/TTS</span>
+        <span class="proj-tag">PCM Audio</span>
+        <span class="proj-tag">IVR</span>
+        <span class="proj-tag">YAML Config</span>
+        <span class="proj-tag">Multi-tenant</span>
+      </div>
+    </div>
+
+    <div class="proj-card">
+      <div class="proj-num">05 / APP</div>
+      <div class="proj-title">AI Recipe Generator</div>
+      <div class="proj-desc">
+        Cross-platform app generating recipes from user-input ingredients via Meta LLaMA 2 with a Streamlit backend and Kotlin Android frontend.
+      </div>
+      <div class="proj-tags">
+        <span class="proj-tag">LLaMA 2</span>
+        <span class="proj-tag">Streamlit</span>
+        <span class="proj-tag">Kotlin</span>
+        <span class="proj-tag">Android</span>
+      </div>
+    </div>
+
+    <div class="proj-card">
+      <div class="proj-num">06 / AUDIO ML</div>
+      <div class="proj-title">AI-Powered Speaker Diarization</div>
+      <div class="proj-desc">
+        Tool segmenting audio into speaker-specific chunks using Hugging Face Pyannote. Tested on multi-speaker recordings with 3+ participants with high accuracy.
+      </div>
+      <div class="proj-tags">
+        <span class="proj-tag">Pyannote</span>
+        <span class="proj-tag">Hugging Face</span>
+        <span class="proj-tag">Python</span>
+        <span class="proj-tag">Speaker Segmentation</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="section-label">Technical Stack</div>
+  <h2 class="section-title">What I Work With</h2>
+
+  <div class="skills-wrapper">
+
+    <div>
+      <div class="skill-group-title">Languages</div>
+      <div class="skill-tags">
+        <span class="skill-tag">Python</span>
+        <span class="skill-tag">JavaScript</span>
+        <span class="skill-tag">Kotlin</span>
+      </div>
+    </div>
+
+    <div>
+      <div class="skill-group-title">Voice AI & Telephony</div>
+      <div class="skill-tags">
+        <span class="skill-tag">Sarvam AI v2.5</span>
+        <span class="skill-tag">Google Cloud STT/TTS</span>
+        <span class="skill-tag">ElevenLabs</span>
+        <span class="skill-tag">Deepgram</span>
+        <span class="skill-tag">Whisper</span>
+        <span class="skill-tag">Pyannote</span>
+        <span class="skill-tag">Parselmouth</span>
+        <span class="skill-tag">IVR Systems</span>
+        <span class="skill-tag">Slot Filling</span>
+        <span class="skill-tag">Barge-In</span>
+        <span class="skill-tag">FSM Dialogue</span>
+      </div>
+    </div>
+
+    <div>
+      <div class="skill-group-title">RAG & Search</div>
+      <div class="skill-tags">
+        <span class="skill-tag">FAISS</span>
+        <span class="skill-tag">BM25 / RRF</span>
+        <span class="skill-tag">Cross-Encoder Reranking</span>
+        <span class="skill-tag">BGE Embeddings</span>
+        <span class="skill-tag">FastEmbed</span>
+        <span class="skill-tag">HyDE</span>
+        <span class="skill-tag">Multi-Query Expansion</span>
+      </div>
+    </div>
+
+    <div>
+      <div class="skill-group-title">AI & GenAI</div>
+      <div class="skill-tags">
+        <span class="skill-tag">Groq LLMs</span>
+        <span class="skill-tag">OpenAI APIs</span>
+        <span class="skill-tag">LangGraph</span>
+        <span class="skill-tag">LangChain</span>
+        <span class="skill-tag">Hugging Face</span>
+        <span class="skill-tag">spaCy NER</span>
+        <span class="skill-tag">Librosa</span>
+      </div>
+    </div>
+
+    <div>
+      <div class="skill-group-title">Backend & APIs</div>
+      <div class="skill-tags">
+        <span class="skill-tag">FastAPI</span>
+        <span class="skill-tag">Flask</span>
+        <span class="skill-tag">WebSockets</span>
+        <span class="skill-tag">AsyncIO</span>
+        <span class="skill-tag">REST APIs</span>
+        <span class="skill-tag">YAML/JSON Config</span>
+      </div>
+    </div>
+
+    <div>
+      <div class="skill-group-title">Data & Storage</div>
+      <div class="skill-tags">
+        <span class="skill-tag">PostgreSQL</span>
+        <span class="skill-tag">Redis</span>
+        <span class="skill-tag">MySQL</span>
+        <span class="skill-tag">SQL Server</span>
+        <span class="skill-tag">Pandas</span>
+        <span class="skill-tag">NumPy</span>
+      </div>
+    </div>
+
+    <div>
+      <div class="skill-group-title">Cloud & Deployment</div>
+      <div class="skill-tags">
+        <span class="skill-tag">AWS EC2</span>
+        <span class="skill-tag">AWS S3</span>
+        <span class="skill-tag">Docker</span>
+        <span class="skill-tag">Railway</span>
+        <span class="skill-tag">Linux</span>
+        <span class="skill-tag">CI/CD</span>
+        <span class="skill-tag">GitHub Actions</span>
+      </div>
+    </div>
+
+    <div>
+      <div class="skill-group-title">Frontend</div>
+      <div class="skill-tags">
+        <span class="skill-tag">React v18+</span>
+        <span class="skill-tag">Vue 3</span>
+        <span class="skill-tag">HTML / CSS</span>
+        <span class="skill-tag">Bootstrap</span>
+        <span class="skill-tag">Streamlit</span>
+        <span class="skill-tag">Android Studio</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- EDUCATION -->
+<section id="education">
+  <div class="section-label">Education & Certifications</div>
+  <h2 class="section-title">Academic Background</h2>
+
+  <div class="edu-grid">
+    <div class="edu-card">
+      <div>
+        <div class="edu-degree">M.Sc. in Computer Science</div>
+        <div class="edu-school">Anglia Ruskin University, Cambridge, UK</div>
+      </div>
+      <div class="edu-year">2024</div>
+    </div>
+    <div class="edu-card">
+      <div>
+        <div class="edu-degree">Bachelor of Business Administration — Computer Aided Management</div>
+        <div class="edu-school">Guru Gobind Singh Indraprastha University, Delhi</div>
+      </div>
+      <div class="edu-year">2020</div>
+    </div>
+    <div class="edu-card">
+      <div>
+        <div class="edu-degree">Advanced Diploma in Animation</div>
+        <div class="edu-school">Arena Animation, Delhi</div>
+      </div>
+      <div class="edu-year">2021</div>
+    </div>
+    <div class="edu-card" style="border-color: rgba(255,179,64,0.2);">
+      <div>
+        <div class="edu-degree" style="color:var(--amber);">🏅 Cisco Certified Python Developer</div>
+        <div class="edu-school" style="color:var(--muted);">Certification</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="section-label">Get In Touch</div>
+  <h2 class="section-title">Let's Work Together</h2>
+  <div class="contact-box">
+    <p style="font-size:1.05rem; color:var(--text); max-width:440px; margin: 0 auto 0.5rem;">
+      Open to exciting GenAI, Voice AI, and backend engineering opportunities.
+      Feel free to reach out — I'd love to connect.
+    </p>
+    <div class="contact-links">
+      <a class="contact-link" href="mailto:mehuluniyal2022@gmail.com">
+        ✉ mehuluniyal2022@gmail.com
+      </a>
+      <a class="contact-link" href="https://linkedin.com/in/mehul-uniyal-32b985211" target="_blank" rel="noopener">
+        ⟶ LinkedIn
+      </a>
+      <a class="contact-link" href="https://github.com/mehulbest" target="_blank" rel="noopener">
+        ⌥ GitHub
+      </a>
+      <a class="contact-link" href="Mehul_Uniyal_2026_Resume.pdf" download="Mehul_Uniyal_Resume.pdf" style="border-color:rgba(0,255,200,0.3);color:var(--cyan);">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        Download Resume
+      </a>
+    </div>
+    <p style="font-family:var(--font-mono);font-size:0.68rem;color:var(--muted);margin-top:1.8rem;">
+      +91 7011974299 &nbsp;·&nbsp; +44 7393135282
+    </p>
+  </div>
+</section>
+
+<footer>
+  <span style="color:var(--cyan);">mehul uniyal</span> &nbsp;·&nbsp; built with vanilla HTML · open source · © 2025
+</footer>
+
+<script>
+/* ─── CANVAS PARTICLE NETWORK ─── */
+(function(){
+  const canvas = document.getElementById('canvas');
+  const ctx = canvas.getContext('2d');
+  let W, H, particles = [], mouse = {x:-999, y:-999};
+
+  function resize(){ W = canvas.width = innerWidth; H = canvas.height = innerHeight; }
+  resize();
+  window.addEventListener('resize', resize);
+  window.addEventListener('mousemove', e => { mouse.x = e.clientX; mouse.y = e.clientY; });
+
+  const COUNT = Math.min(Math.floor(W * H / 14000), 90);
+
+  function Particle(){
+    this.reset = function(){
+      this.x  = Math.random() * W;
+      this.y  = Math.random() * H;
+      this.vx = (Math.random()-0.5)*0.35;
+      this.vy = (Math.random()-0.5)*0.35;
+      this.r  = Math.random()*1.5+0.5;
+      this.o  = Math.random()*0.5+0.2;
+    };
+    this.reset();
+  }
+
+  for(let i=0;i<COUNT;i++){ const p=new Particle(); particles.push(p); }
+
+  function draw(){
+    ctx.clearRect(0,0,W,H);
+
+    // draw connections
+    for(let i=0;i<particles.length;i++){
+      for(let j=i+1;j<particles.length;j++){
+        const dx=particles[i].x-particles[j].x;
+        const dy=particles[i].y-particles[j].y;
+        const dist=Math.sqrt(dx*dx+dy*dy);
+        if(dist<140){
+          ctx.beginPath();
+          ctx.strokeStyle=`rgba(0,255,200,${0.12*(1-dist/140)})`;
+          ctx.lineWidth=0.5;
+          ctx.moveTo(particles[i].x,particles[i].y);
+          ctx.lineTo(particles[j].x,particles[j].y);
+          ctx.stroke();
+        }
+      }
+      // mouse connection
+      const mx=particles[i].x-mouse.x;
+      const my=particles[i].y-mouse.y;
+      const md=Math.sqrt(mx*mx+my*my);
+      if(md<160){
+        ctx.beginPath();
+        ctx.strokeStyle=`rgba(0,255,200,${0.3*(1-md/160)})`;
+        ctx.lineWidth=0.8;
+        ctx.moveTo(particles[i].x,particles[i].y);
+        ctx.lineTo(mouse.x,mouse.y);
+        ctx.stroke();
+      }
+    }
+
+    // draw dots
+    for(const p of particles){
+      ctx.beginPath();
+      ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+      ctx.fillStyle=`rgba(0,255,200,${p.o})`;
+      ctx.fill();
+
+      p.x+=p.vx; p.y+=p.vy;
+      if(p.x<0||p.x>W) p.vx*=-1;
+      if(p.y<0||p.y>H) p.vy*=-1;
+    }
+
+    requestAnimationFrame(draw);
+  }
+  draw();
+})();
+
+/* ─── TYPING EFFECT ─── */
+(function(){
+  const phrases = [
+    'GenAI Engineer',
+    'Voice AI Architect',
+    'RAG Systems Builder',
+    'Real-time Telephony Dev',
+    'LangGraph Agent Designer'
+  ];
+  let pIdx=0, cIdx=0, deleting=false;
+  const el = document.getElementById('typed-text');
+
+  function type(){
+    const phrase = phrases[pIdx];
+    if(!deleting){
+      el.textContent = phrase.slice(0, cIdx+1);
+      cIdx++;
+      if(cIdx===phrase.length){ deleting=true; setTimeout(type, 1800); return; }
+    } else {
+      el.textContent = phrase.slice(0, cIdx-1);
+      cIdx--;
+      if(cIdx===0){ deleting=false; pIdx=(pIdx+1)%phrases.length; }
+    }
+    setTimeout(type, deleting ? 45 : 80);
+  }
+  setTimeout(type, 800);
+})();
+
+/* ─── CURSOR GLOW ─── */
+(function(){
+  const glow = document.getElementById('cursor-glow');
+  const dot  = document.getElementById('cursor-dot');
+  const ring = document.getElementById('cursor-ring');
+
+  let mx = -999, my = -999;
+  let rx = -999, ry = -999; // ring follows with lag
+
+  document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
+
+  // dot snaps instantly; ring lags for smoothness
+  function tick(){
+    // snap dot
+    dot.style.left  = mx + 'px';
+    dot.style.top   = my + 'px';
+
+    // ease ring toward cursor
+    rx += (mx - rx) * 0.12;
+    ry += (my - ry) * 0.12;
+    ring.style.left = rx + 'px';
+    ring.style.top  = ry + 'px';
+
+    // update spotlight
+    glow.style.setProperty('--cx', mx + 'px');
+    glow.style.setProperty('--cy', my + 'px');
+
+    requestAnimationFrame(tick);
+  }
+  tick();
+
+  // enlarge ring on interactive elements
+  const interactables = 'a, button, .proj-card, .skill-tag, .btn';
+  document.querySelectorAll(interactables).forEach(el => {
+    el.addEventListener('mouseenter', () => {
+      ring.style.width  = '54px';
+      ring.style.height = '54px';
+      ring.style.borderColor = 'var(--cyan)';
+      ring.style.boxShadow   = '0 0 18px rgba(0,255,200,0.35)';
+    });
+    el.addEventListener('mouseleave', () => {
+      ring.style.width  = '36px';
+      ring.style.height = '36px';
+      ring.style.borderColor = 'rgba(0,255,200,0.45)';
+      ring.style.boxShadow   = '0 0 10px rgba(0,255,200,0.15)';
+    });
+  });
+
+  // hide when cursor leaves window
+  document.addEventListener('mouseleave', () => { dot.style.opacity='0'; ring.style.opacity='0'; });
+  document.addEventListener('mouseenter', () => { dot.style.opacity='1'; ring.style.opacity='1'; });
+})();
+
+/* ─── SCROLL REVEAL ─── */
+(function(){
+  const items = document.querySelectorAll('.timeline-item, .proj-card, .edu-card, .skill-tag');
+  const obs = new IntersectionObserver((entries)=>{
+    entries.forEach((e,i)=>{
+      if(e.isIntersecting){
+        const delay = e.target.classList.contains('skill-tag') ?
+          (Array.from(e.target.parentElement.children).indexOf(e.target)) * 40 : 0;
+        setTimeout(()=>{ e.target.classList.add('visible'); }, delay);
+        obs.unobserve(e.target);
+      }
+    });
+  }, {threshold:0.12});
+
+  items.forEach(el=>obs.observe(el));
+})();
+</script>
+</body>
+</html>
