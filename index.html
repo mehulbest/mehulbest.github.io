@@ -46,10 +46,8 @@ body{
 ::-webkit-scrollbar{width:5px}
 ::-webkit-scrollbar-track{background:var(--bg)}
 ::-webkit-scrollbar-thumb{background:linear-gradient(var(--violet),var(--magenta));border-radius:3px}
-
 a{color:inherit}
 img{max-width:100%}
-
 /* ════════════════════ BACKGROUND LAYERS ════════════════════ */
 .aurora{
   position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden;
@@ -63,7 +61,6 @@ img{max-width:100%}
 @keyframes drift1{to{transform:translate(14vw,10vh) scale(1.18)}}
 @keyframes drift2{to{transform:translate(-12vw,16vh) scale(.85)}}
 @keyframes drift3{to{transform:translate(-10vw,-14vh) scale(1.12)}}
-
 .grain{
   position:fixed;inset:-50%;z-index:1;pointer-events:none;opacity:.05;
   background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
@@ -74,7 +71,6 @@ img{max-width:100%}
   37.5%{transform:translate(-3%,-3%)}50%{transform:translate(5%,4%)}62.5%{transform:translate(-5%,2%)}
   75%{transform:translate(4%,-4%)}87.5%{transform:translate(2%,5%)}
 }
-
 .gridlines{
   position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.35;
   background-image:
@@ -84,7 +80,6 @@ img{max-width:100%}
   mask-image:radial-gradient(ellipse 90% 70% at 50% 0%,black 30%,transparent 75%);
   -webkit-mask-image:radial-gradient(ellipse 90% 70% at 50% 0%,black 30%,transparent 75%);
 }
-
 /* ════════════════════ BOOT SEQUENCE ════════════════════ */
 #boot{
   position:fixed;inset:0;z-index:1000;background:var(--bg);
@@ -107,7 +102,6 @@ img{max-width:100%}
 @keyframes bootfill{to{width:100%}}
 .boot-status{font-family:var(--font-m);font-size:.62rem;letter-spacing:.28em;color:var(--faint);text-transform:uppercase}
 @keyframes gradflow{to{background-position:300% 0}}
-
 /* ════════════════════ SCROLL PROGRESS ════════════════════ */
 #progress{
   position:fixed;top:0;left:0;height:2px;width:100%;z-index:300;
@@ -115,7 +109,6 @@ img{max-width:100%}
   background:var(--grad);background-size:300% 100%;
   animation:gradflow 4s linear infinite;
 }
-
 /* ════════════════════ CURSOR ════════════════════ */
 .cursor-dot,.cursor-ring{pointer-events:none;position:fixed;z-index:900;transform:translate(-50%,-50%);opacity:0}
 .cursor-dot{width:6px;height:6px;border-radius:50%;background:#fff;mix-blend-mode:difference}
@@ -125,7 +118,6 @@ img{max-width:100%}
   transition:width .3s var(--ease-spr),height .3s var(--ease-spr),border-color .3s,background .3s;
 }
 .cursor-ring.hot{width:64px;height:64px;border-color:transparent;background:radial-gradient(circle,rgba(139,92,255,.16),transparent 70%);backdrop-filter:blur(1px)}
-
 /* ════════════════════ NAV ════════════════════ */
 nav{
   position:fixed;top:18px;left:50%;transform:translateX(-50%);z-index:200;
@@ -163,7 +155,6 @@ nav{
 .nav-toggle[aria-expanded="true"] span:nth-child(1){transform:translateY(6.5px) rotate(45deg)}
 .nav-toggle[aria-expanded="true"] span:nth-child(2){opacity:0}
 .nav-toggle[aria-expanded="true"] span:nth-child(3){transform:translateY(-6.5px) rotate(-45deg)}
-
 /* ════════════════════ SHARED SECTION ════════════════════ */
 section{position:relative;z-index:2;max-width:1140px;margin:0 auto;padding:7.5rem 2rem}
 .eyebrow{
@@ -185,13 +176,11 @@ h2.title em{
   -webkit-background-clip:text;background-clip:text;color:transparent;
   animation:gradflow 6s linear infinite;
 }
-
 /* masked line reveal */
 .reveal{opacity:0;transform:translateY(34px);filter:blur(6px);transition:opacity .9s var(--ease-out),transform .9s var(--ease-out),filter .9s var(--ease-out)}
 .reveal.in{opacity:1;transform:translateY(0);filter:blur(0)}
 .reveal.d1{transition-delay:.08s}.reveal.d2{transition-delay:.16s}.reveal.d3{transition-delay:.24s}
 .reveal.d4{transition-delay:.32s}.reveal.d5{transition-delay:.4s}
-
 /* ════════════════════ HERO ════════════════════ */
 #hero{
   min-height:100svh;max-width:1140px;margin:0 auto;
@@ -210,7 +199,6 @@ h2.title em{
 .hero-tag .dot{width:6px;height:6px;border-radius:50%;background:var(--live);box-shadow:0 0 10px var(--live);animation:pulse 1.6s ease-in-out infinite}
 @keyframes pulse{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.7);opacity:.45}}
 @keyframes rise{from{opacity:0;transform:translateY(26px)}to{opacity:1;transform:translateY(0)}}
-
 h1.name{
   font-family:var(--font-d);font-weight:800;
   font-size:clamp(2.7rem,8.2vw,5.4rem);
@@ -226,7 +214,6 @@ h1.name .line:nth-child(2) span{
   animation:lineup 1s 1.58s var(--ease-out) forwards,gradflow 6s linear infinite;
 }
 @keyframes lineup{to{transform:translateY(0)}}
-
 .hero-role{
   font-family:var(--font-m);font-size:clamp(.85rem,2.2vw,1.05rem);
   color:var(--muted);margin:1.4rem 0 1.6rem;min-height:1.8em;
@@ -234,13 +221,11 @@ h1.name .line:nth-child(2) span{
 }
 .hero-role .caret{display:inline-block;width:9px;height:1.15em;background:var(--grad);vertical-align:text-bottom;margin-left:4px;animation:blink .85s step-end infinite}
 @keyframes blink{50%{opacity:0}}
-
 .hero-desc{
   max-width:560px;color:#bdb8d9;font-size:1.02rem;
   opacity:0;animation:rise .8s 1.95s var(--ease-out) forwards;
 }
 .hero-cta{display:flex;gap:.9rem;flex-wrap:wrap;margin-top:2.4rem;opacity:0;animation:rise .8s 2.1s var(--ease-out) forwards}
-
 .btn{
   position:relative;display:inline-flex;align-items:center;gap:.55rem;
   font-family:var(--font-m);font-size:.7rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;
@@ -259,7 +244,6 @@ h1.name .line:nth-child(2) span{
   backdrop-filter:blur(8px);
 }
 .btn-ghost:hover{border-color:rgba(139,92,255,.55);box-shadow:0 0 24px rgba(139,92,255,.18)}
-
 .hero-stats{
   display:grid;grid-template-columns:repeat(4,auto);gap:2.6rem;justify-content:start;
   margin-top:3.6rem;padding-top:2rem;border-top:1px solid var(--line);
@@ -274,7 +258,6 @@ h1.name .line:nth-child(2) span{
   background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent;
 }
 .stat-label{font-family:var(--font-m);font-size:.58rem;letter-spacing:.18em;text-transform:uppercase;color:var(--faint);margin-top:.45rem}
-
 /* ── voice orb ── */
 .hero-right{position:relative;display:flex;align-items:center;justify-content:center;min-height:420px}
 #orb{width:min(46vw,460px);height:min(46vw,460px);max-width:100%;opacity:0;animation:orbin 1.4s 1.5s var(--ease-out) forwards}
@@ -285,7 +268,6 @@ h1.name .line:nth-child(2) span{
   white-space:nowrap;opacity:0;animation:rise .8s 2.5s var(--ease-out) forwards;
 }
 .orb-caption b{color:var(--live);font-weight:400}
-
 /* ════════════════════ TICKER ════════════════════ */
 .ticker{
   position:relative;z-index:2;overflow:hidden;
@@ -303,7 +285,6 @@ h1.name .line:nth-child(2) span{
 }
 .ticker-track i{font-style:normal;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
 @keyframes ticker{to{transform:translateX(-50%)}}
-
 /* ════════════════════ EXPERIENCE ════════════════════ */
 .timeline{position:relative;padding-left:2.6rem}
 .timeline-rail{position:absolute;left:5px;top:6px;bottom:0;width:2px;background:rgba(170,150,255,.1);border-radius:2px;overflow:hidden}
@@ -341,7 +322,6 @@ h1.name .line:nth-child(2) span{
   background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent;
 }
 .exp-bullets li b{color:var(--ink);font-weight:500}
-
 /* ════════════════════ PROJECTS ════════════════════ */
 .projects-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1.4rem;perspective:1400px}
 .proj-card{
@@ -376,7 +356,6 @@ h1.name .line:nth-child(2) span{
   transition:color .25s,border-color .25s,box-shadow .25s;
 }
 .proj-card:hover .proj-tag{color:#cfc9ee;border-color:rgba(139,92,255,.3)}
-
 /* waveform deco inside flagship card */
 .waveform{display:flex;align-items:flex-end;gap:3px;height:22px;margin-bottom:1rem}
 .waveform span{width:3px;border-radius:3px;background:var(--grad);background-size:100% 300%;animation:wave 1.15s ease-in-out infinite}
@@ -385,7 +364,6 @@ h1.name .line:nth-child(2) span{
 .waveform span:nth-child(5){height:15px;animation-delay:.4s}.waveform span:nth-child(6){height:8px;animation-delay:.5s}
 .waveform span:nth-child(7){height:13px;animation-delay:.6s}.waveform span:nth-child(8){height:20px;animation-delay:.7s}
 @keyframes wave{0%,100%{transform:scaleY(1)}50%{transform:scaleY(.32)}}
-
 /* ════════════════════ SKILLS ════════════════════ */
 .skills-wrapper{display:flex;flex-direction:column;gap:2.4rem}
 .skill-group-title{
@@ -411,7 +389,6 @@ h1.name .line:nth-child(2) span{
 }
 .skill-tag:hover{border-color:rgba(255,78,205,.5);color:#fff;box-shadow:0 0 22px rgba(255,78,205,.18)}
 .skill-tag:hover::before{left:130%}
-
 /* ════════════════════ EDUCATION ════════════════════ */
 .edu-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1.2rem}
 .edu-card{
@@ -430,7 +407,6 @@ h1.name .line:nth-child(2) span{
 }
 .edu-cert{border-color:rgba(255,179,138,.28)}
 .edu-cert .edu-degree{color:var(--peach)}
-
 /* ════════════════════ CONTACT ════════════════════ */
 .contact-box{
   position:relative;text-align:center;
@@ -461,14 +437,12 @@ h1.name .line:nth-child(2) span{
   color:#0a0716;font-weight:600;border-color:transparent;
 }
 .contact-phones{font-family:var(--font-m);font-size:.64rem;color:var(--faint);margin-top:2rem;letter-spacing:.1em}
-
 footer{
   position:relative;z-index:2;text-align:center;
   font-family:var(--font-m);font-size:.62rem;letter-spacing:.16em;text-transform:uppercase;
   color:var(--faint);padding:2.6rem 1rem;border-top:1px solid var(--line);
 }
 footer i{font-style:normal;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
-
 /* ════════════════════ RESPONSIVE ════════════════════ */
 @media (max-width:920px){
   #hero{grid-template-columns:1fr;padding-top:8.5rem;text-align:left;gap:0}
@@ -492,7 +466,6 @@ footer i{font-style:normal;background:var(--grad);-webkit-background-clip:text;b
   .nav-links a{display:block;text-align:center;padding:.7rem}
   .cursor-dot,.cursor-ring{display:none}
 }
-
 /* ════════════════════ REDUCED MOTION ════════════════════ */
 @media (prefers-reduced-motion:reduce){
   *,*::before,*::after{animation-duration:.01ms !important;animation-iteration-count:1 !important;transition-duration:.01ms !important}
@@ -504,25 +477,20 @@ footer i{font-style:normal;background:var(--grad);-webkit-background-clip:text;b
 </style>
 </head>
 <body>
-
 <!-- boot -->
 <div id="boot" aria-hidden="true">
   <div class="boot-logo">MEHUL·UNIYAL</div>
   <div class="boot-line"></div>
   <div class="boot-status" id="boot-status">establishing session…</div>
 </div>
-
 <div id="progress"></div>
-
 <!-- ambience -->
 <div class="aurora" aria-hidden="true"><i></i><i></i><i></i></div>
 <div class="gridlines" aria-hidden="true"></div>
 <div class="grain" aria-hidden="true"></div>
-
 <!-- cursor -->
 <div class="cursor-ring" id="cursor-ring" aria-hidden="true"></div>
 <div class="cursor-dot" id="cursor-dot" aria-hidden="true"></div>
-
 <!-- NAV -->
 <nav>
   <a class="nav-logo" href="#hero">MU://</a>
@@ -537,7 +505,6 @@ footer i{font-style:normal;background:var(--grad);-webkit-background-clip:text;b
     <li><a href="#contact" data-sec="contact">Contact</a></li>
   </ul>
 </nav>
-
 <!-- HERO -->
 <section id="hero">
   <div class="hero-left">
@@ -579,27 +546,41 @@ footer i{font-style:normal;background:var(--grad);-webkit-background-clip:text;b
       </div>
     </div>
   </div>
-
   <div class="hero-right">
     <canvas id="orb" aria-hidden="true"></canvas>
     <div class="orb-caption">voice engine <b>● live</b> · listening</div>
   </div>
 </section>
-
 <!-- TICKER -->
 <div class="ticker" aria-hidden="true">
   <div class="ticker-track" id="ticker-track">
     <span>Voice AI <i>◆</i> Real-time Telephony <i>◆</i> RAG Systems <i>◆</i> LangGraph Agents <i>◆</i> Sub-200ms TTS <i>◆</i> WebSocket Streaming <i>◆</i> FAISS + BM25 Hybrid Retrieval <i>◆</i> Barge-in Detection <i>◆</i> Multi-tenant Platforms <i>◆</i>&nbsp;</span>
   </div>
 </div>
-
 <!-- EXPERIENCE -->
 <section id="experience">
   <div class="eyebrow reveal">stream 01 <span class="sig">● live</span> — work experience</div>
   <h2 class="title reveal d1">Where I've <em>Built</em></h2>
-
   <div class="timeline">
     <div class="timeline-rail"><i id="rail-fill"></i></div>
+    <div class="timeline-item reveal d2">
+      <div class="timeline-dot"></div>
+      <div class="exp-card">
+        <div class="exp-header">
+          <div>
+            <div class="exp-role">AI/ML Engineer</div>
+            <div class="exp-company">Preview Technologies · Noida, India</div>
+          </div>
+          <div class="exp-date">Jun 2026 – Present</div>
+        </div>
+        <ul class="exp-bullets">
+          <li>Building <b>production RAG chatbots on Microsoft Azure</b> with automated data-ingestion pipelines, integrating Azure OpenAI to deliver grounded, context-aware conversational responses over client knowledge bases.</li>
+          <li>Engineered a <b>deep website-crawling and content-ingestion pipeline</b> for the UP Eco Tourism project, systematically extracting and structuring large volumes of site content to power the chatbot's retrieval knowledge base.</li>
+          <li>Architecting an <b>AI-powered Compliance Management System</b> for the Delhi Pollution Control Committee (DPCC) that analyzes on-site CCTV and 360° camera feeds to automatically verify environmental compliance in real time.</li>
+          <li>Training and fine-tuning <b>computer-vision models (VLM, YOLO)</b> on custom-annotated datasets for compliance detection and real-time object monitoring.</li>
+        </ul>
+      </div>
+    </div>
     <div class="timeline-item reveal d2">
       <div class="timeline-dot"></div>
       <div class="exp-card">
@@ -621,14 +602,11 @@ footer i{font-style:normal;background:var(--grad);-webkit-background-clip:text;b
     </div>
   </div>
 </section>
-
 <!-- PROJECTS -->
 <section id="projects">
   <div class="eyebrow reveal">stream 02 — selected projects</div>
   <h2 class="title reveal d1">Things I've <em>Shipped</em></h2>
-
   <div class="projects-grid">
-
     <div class="proj-card tilt reveal d1">
       <div class="proj-num">01 / SOLO PROJECT</div>
       <div class="waveform"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
@@ -640,7 +618,6 @@ footer i{font-style:normal;background:var(--grad);-webkit-background-clip:text;b
         <span class="proj-tag">FastAPI</span><span class="proj-tag">ElevenLabs</span><span class="proj-tag">Groq LLaMA-3.3-70b</span><span class="proj-tag">Redis</span><span class="proj-tag">PostgreSQL</span><span class="proj-tag">Vue 3</span><span class="proj-tag">SQLAlchemy</span>
       </div>
     </div>
-
     <div class="proj-card tilt reveal d2">
       <div class="proj-num">02 / ANALYTICS</div>
       <div class="proj-title">AI-Powered Call QA &amp; Intent Analytics</div>
@@ -651,7 +628,6 @@ footer i{font-style:normal;background:var(--grad);-webkit-background-clip:text;b
         <span class="proj-tag">Groq LLM</span><span class="proj-tag">Parselmouth</span><span class="proj-tag">Pyannote</span><span class="proj-tag">spaCy NER</span><span class="proj-tag">SQL Server</span><span class="proj-tag">4 Indian Languages</span>
       </div>
     </div>
-
     <div class="proj-card tilt reveal d1">
       <div class="proj-num">03 / ML</div>
       <div class="proj-title">Speech Emotion Recognition System</div>
@@ -662,7 +638,6 @@ footer i{font-style:normal;background:var(--grad);-webkit-background-clip:text;b
         <span class="proj-tag">CNN</span><span class="proj-tag">Librosa</span><span class="proj-tag">MFCC</span><span class="proj-tag">Python</span><span class="proj-tag">Deep Learning</span>
       </div>
     </div>
-
     <div class="proj-card tilt reveal d2">
       <div class="proj-num">04 / PLATFORM</div>
       <div class="proj-title">Production Telephony AI Voice Platform</div>
@@ -673,7 +648,6 @@ footer i{font-style:normal;background:var(--grad);-webkit-background-clip:text;b
         <span class="proj-tag">WebSocket</span><span class="proj-tag">Google STT/TTS</span><span class="proj-tag">PCM Audio</span><span class="proj-tag">IVR</span><span class="proj-tag">YAML Config</span><span class="proj-tag">Multi-tenant</span>
       </div>
     </div>
-
     <div class="proj-card tilt reveal d1">
       <div class="proj-num">05 / APP</div>
       <div class="proj-title">AI Recipe Generator</div>
@@ -684,7 +658,6 @@ footer i{font-style:normal;background:var(--grad);-webkit-background-clip:text;b
         <span class="proj-tag">LLaMA 2</span><span class="proj-tag">Streamlit</span><span class="proj-tag">Kotlin</span><span class="proj-tag">Android</span>
       </div>
     </div>
-
     <div class="proj-card tilt reveal d2">
       <div class="proj-num">06 / AUDIO ML</div>
       <div class="proj-title">AI-Powered Speaker Diarization</div>
@@ -695,15 +668,12 @@ footer i{font-style:normal;background:var(--grad);-webkit-background-clip:text;b
         <span class="proj-tag">Pyannote</span><span class="proj-tag">Hugging Face</span><span class="proj-tag">Python</span><span class="proj-tag">Speaker Segmentation</span>
       </div>
     </div>
-
   </div>
 </section>
-
 <!-- SKILLS -->
 <section id="skills">
   <div class="eyebrow reveal">stream 03 — technical stack</div>
   <h2 class="title reveal d1">What I <em>Work With</em></h2>
-
   <div class="skills-wrapper">
     <div class="reveal d1">
       <div class="skill-group-title">Languages</div>
@@ -755,12 +725,10 @@ footer i{font-style:normal;background:var(--grad);-webkit-background-clip:text;b
     </div>
   </div>
 </section>
-
 <!-- EDUCATION -->
 <section id="education">
   <div class="eyebrow reveal">stream 04 — education &amp; certifications</div>
   <h2 class="title reveal d1">Academic <em>Background</em></h2>
-
   <div class="edu-grid">
     <div class="edu-card reveal d1">
       <div>
@@ -791,7 +759,6 @@ footer i{font-style:normal;background:var(--grad);-webkit-background-clip:text;b
     </div>
   </div>
 </section>
-
 <!-- CONTACT -->
 <section id="contact">
   <div class="eyebrow reveal">stream 05 — get in touch</div>
@@ -813,15 +780,12 @@ footer i{font-style:normal;background:var(--grad);-webkit-background-clip:text;b
     <p class="contact-phones">+91 7011974299 &nbsp;·&nbsp; +44 7393135282</p>
   </div>
 </section>
-
 <footer>
   <i>mehul uniyal</i> &nbsp;·&nbsp; built with vanilla HTML · open source · © 2026
 </footer>
-
 <script>
 const REDUCED = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 const TOUCH   = ('ontouchstart' in window) || navigator.maxTouchPoints > 0;
-
 /* ─── BOOT SEQUENCE ─── */
 (function(){
   const boot = document.getElementById('boot');
@@ -837,7 +801,6 @@ const TOUCH   = ('ontouchstart' in window) || navigator.maxTouchPoints > 0;
   // safety: never trap the user
   setTimeout(()=>boot.classList.add('done'), 2200);
 })();
-
 /* ─── VOICE ORB ─── */
 let orbExcite = 0; // shared with typing effect
 (function(){
@@ -848,7 +811,6 @@ let orbExcite = 0; // shared with typing effect
   let size = 0, raf = null, t = 0;
   const BARS = 110;
   const mouse = { x: -9999, y: -9999 };
-
   function resize(){
     const rect = canvas.getBoundingClientRect();
     size = Math.max(rect.width, 10);
@@ -858,13 +820,11 @@ let orbExcite = 0; // shared with typing effect
   }
   resize();
   window.addEventListener('resize', resize);
-
   window.addEventListener('mousemove', e => {
     const r = canvas.getBoundingClientRect();
     mouse.x = e.clientX - (r.left + r.width / 2);
     mouse.y = e.clientY - (r.top + r.height / 2);
   });
-
   // layered pseudo-noise
   function noise(a, time){
     return (
@@ -873,7 +833,6 @@ let orbExcite = 0; // shared with typing effect
       Math.sin(a * 13 + time * 3.1) * 0.2
     );
   }
-
   function hue(frac){
     // violet -> magenta -> cyan sweep
     const stops = [
@@ -888,17 +847,14 @@ let orbExcite = 0; // shared with typing effect
     const c = stops[i].map((v, idx) => Math.round(v + (stops[i + 1][idx] - v) * k));
     return c;
   }
-
   function draw(){
     t += 0.016;
     const c = size / 2;
     const baseR = size * 0.27;
     ctx.clearRect(0, 0, size, size);
-
     const mDist = Math.hypot(mouse.x, mouse.y);
     const mNear = Math.max(0, 1 - mDist / (size * 0.7));
     const excite = 0.35 + mNear * 0.55 + orbExcite * 0.6;
-
     // breathing core
     const breathe = 1 + Math.sin(t * 1.4) * 0.03 + orbExcite * 0.05;
     const coreR = baseR * 0.62 * breathe;
@@ -910,7 +866,6 @@ let orbExcite = 0; // shared with typing effect
     ctx.beginPath();
     ctx.arc(c, c, coreR * 1.9, 0, Math.PI * 2);
     ctx.fill();
-
     // radial frequency bars
     for (let i = 0; i < BARS; i++){
       const a = (i / BARS) * Math.PI * 2;
@@ -930,14 +885,12 @@ let orbExcite = 0; // shared with typing effect
       ctx.lineTo(x1, y1);
       ctx.stroke();
     }
-
     // inner ring
     ctx.strokeStyle = 'rgba(236,233,247,0.18)';
     ctx.lineWidth = 1;
     ctx.beginPath();
     ctx.arc(c, c, baseR * breathe * 0.92, 0, Math.PI * 2);
     ctx.stroke();
-
     // orbiting satellites
     for (let s = 0; s < 3; s++){
       const sa = t * (0.5 + s * 0.22) + s * 2.1;
@@ -954,20 +907,16 @@ let orbExcite = 0; // shared with typing effect
       ctx.arc(sx, sy, 7, 0, Math.PI * 2);
       ctx.fill();
     }
-
     orbExcite *= 0.92; // decay
     raf = requestAnimationFrame(draw);
   }
-
   if (!REDUCED) draw();
   else { t = 4; orbExcite = 0; draw(); cancelAnimationFrame(raf); }
-
   document.addEventListener('visibilitychange', () => {
     if (document.hidden){ cancelAnimationFrame(raf); }
     else if (!REDUCED){ raf = requestAnimationFrame(draw); }
   });
 })();
-
 /* ─── TYPING (drives the orb) ─── */
 (function(){
   const phrases = [
@@ -980,7 +929,6 @@ let orbExcite = 0; // shared with typing effect
   const el = document.getElementById('typed-text');
   if (REDUCED){ el.textContent = phrases[0]; return; }
   let pIdx = 0, cIdx = 0, deleting = false;
-
   function type(){
     const phrase = phrases[pIdx];
     if (!deleting){
@@ -997,33 +945,28 @@ let orbExcite = 0; // shared with typing effect
   }
   setTimeout(type, 2400);
 })();
-
 /* ─── CURSOR ─── */
 (function(){
   if (TOUCH || REDUCED) return;
   const dot = document.getElementById('cursor-dot');
   const ring = document.getElementById('cursor-ring');
   let mx = -99, my = -99, rx = -99, ry = -99;
-
   document.addEventListener('mousemove', e => {
     mx = e.clientX; my = e.clientY;
     dot.style.opacity = ring.style.opacity = '1';
   });
   document.addEventListener('mouseleave', () => { dot.style.opacity = ring.style.opacity = '0'; });
-
   (function tick(){
     dot.style.left = mx + 'px'; dot.style.top = my + 'px';
     rx += (mx - rx) * 0.14; ry += (my - ry) * 0.14;
     ring.style.left = rx + 'px'; ring.style.top = ry + 'px';
     requestAnimationFrame(tick);
   })();
-
   document.querySelectorAll('a, button, .proj-card, .skill-tag').forEach(el => {
     el.addEventListener('mouseenter', () => ring.classList.add('hot'));
     el.addEventListener('mouseleave', () => ring.classList.remove('hot'));
   });
 })();
-
 /* ─── MAGNETIC BUTTONS ─── */
 (function(){
   if (TOUCH || REDUCED) return;
@@ -1037,7 +980,6 @@ let orbExcite = 0; // shared with typing effect
     btn.addEventListener('mouseleave', () => { btn.style.transform = ''; });
   });
 })();
-
 /* ─── 3D TILT CARDS ─── */
 (function(){
   if (TOUCH || REDUCED) return;
@@ -1053,7 +995,6 @@ let orbExcite = 0; // shared with typing effect
     card.addEventListener('mouseleave', () => { card.style.transform = ''; });
   });
 })();
-
 /* ─── SCROLL: progress bar + timeline rail + active nav ─── */
 (function(){
   const bar = document.getElementById('progress');
@@ -1062,18 +1003,15 @@ let orbExcite = 0; // shared with typing effect
   const navLinks = document.querySelectorAll('.nav-links a[data-sec]');
   const sections = ['experience','projects','skills','education','contact']
     .map(id => document.getElementById(id));
-
   function onScroll(){
     const h = document.documentElement;
     const p = h.scrollTop / (h.scrollHeight - h.clientHeight || 1);
     bar.style.transform = `scaleX(${p})`;
-
     if (timeline && rail){
       const r = timeline.getBoundingClientRect();
       const vis = Math.min(Math.max((window.innerHeight * 0.8 - r.top) / r.height, 0), 1);
       rail.style.transform = `scaleY(${vis})`;
     }
-
     let current = null;
     for (const s of sections){
       if (s && s.getBoundingClientRect().top < window.innerHeight * 0.4) current = s.id;
@@ -1083,7 +1021,6 @@ let orbExcite = 0; // shared with typing effect
   window.addEventListener('scroll', onScroll, { passive: true });
   onScroll();
 })();
-
 /* ─── REVEALS ─── */
 (function(){
   const obs = new IntersectionObserver(entries => {
@@ -1092,7 +1029,6 @@ let orbExcite = 0; // shared with typing effect
     });
   }, { threshold: 0.12 });
   document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
-
   // staggered skill tags
   const tagObs = new IntersectionObserver(entries => {
     entries.forEach(e => {
@@ -1104,7 +1040,6 @@ let orbExcite = 0; // shared with typing effect
   }, { threshold: 0.15 });
   document.querySelectorAll('.skill-tags').forEach(g => tagObs.observe(g));
 })();
-
 /* ─── COUNT-UP STATS ─── */
 (function(){
   const counters = document.querySelectorAll('.count');
@@ -1127,13 +1062,11 @@ let orbExcite = 0; // shared with typing effect
   }, { threshold: 0.4 });
   counters.forEach(c => obs.observe(c));
 })();
-
 /* ─── TICKER: duplicate track for seamless loop ─── */
 (function(){
   const track = document.getElementById('ticker-track');
   if (track) track.innerHTML += track.innerHTML;
 })();
-
 /* ─── HAMBURGER ─── */
 (function(){
   const toggle = document.getElementById('nav-toggle');
